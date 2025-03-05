@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "ConsistenLearning",
+    "version": "1.0",
+    "description": "A google chrome extension to help with consistent deepening a topic's knowledge.",
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "permissions": ["storage", "activeTab", "scripting"],
+    "background": {
+      "service_worker": "background.js"
+    }
+  }
