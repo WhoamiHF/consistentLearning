@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Popup</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Interests</title>
   <style>
-    body { width: 200px; padding: 10px; font-family: Arial, sans-serif; }
+    body { width: 300px; padding: 10px; font-family: Arial, sans-serif; }
+    label { display: block; margin-top: 10px; }
+    select, input { width: 100%; padding: 5px; margin-top: 5px; }
+    .interest-item { margin-bottom: 10px; }
+    .remove-button { cursor: pointer; color: red; font-size: 14px; }
   </style>
 </head>
 <body>
-  <h3>Hello, Chrome!</h3>
-  <button id="clickMe">Click Me</button>
+  <h3>Tell us your study interests</h3>
+  
+  <form id="interestForm">
+    <div id="interestList">
+      <!-- interests -->
+    </div>
+    <button type="button" id="addInterest">Add Interest</button>
+    <button type="submit">Save</button>
+  </form>
+
   <script src="popup.js"></script>
 </body>
 </html>
