@@ -7,21 +7,43 @@
   <style>
     body { width: 300px; padding: 10px; font-family: Arial, sans-serif; }
     label { display: block; margin-top: 10px; }
-    select, input { width: 100%; padding: 5px; margin-top: 5px; }
+    select, input, button { width: 100%; padding: 5px; margin-top: 5px; }
     .interest-item { margin-bottom: 10px; }
     .remove-button { cursor: pointer; color: red; font-size: 14px; }
+    .fact-box { 
+      border: 1px solid #000; 
+      padding: 15px; 
+      margin-bottom: 15px; 
+      text-align: center; 
+      font-size: 16px; 
+      background-color: #f9f9f9; 
+    }
+    .fact-buttons { display: flex; justify-content: space-between; }
+    #interestSettings { display: none; }
   </style>
 </head>
 <body>
-  <h3>Tell us your study interests</h3>
+  <h3>Today's fact</h3>
   
-  <form id="interestForm">
-    <div id="interestList">
-      <!-- interests -->
+  <div class="fact-box" id="dailyFactBox">
+    <p id="dailyFactText">x</p>
+    <div class="fact-buttons">
+      <button id="moreFactBtn">More</button>
+      <button id="knewThatBtn">Knew That</button>
     </div>
-    <button type="button" id="addInterest">Add Interest</button>
-    <button type="submit">Save</button>
-  </form>
+  </div>
+
+  <button id="toggleSettingsBtn">Show Interest Settings</button>
+
+  <div id="interestSettings">
+    <form id="interestForm">
+      <div id="interestList">
+        <!-- interests -->
+      </div>
+      <button type="button" id="addInterest">Add Interest</button>
+      <button type="submit">Save</button>
+    </form>
+  </div>
 
   <script src="popup.js"></script>
 </body>

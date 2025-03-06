@@ -1,6 +1,39 @@
 document.addEventListener('DOMContentLoaded', function() {
   const interestList = document.getElementById("interestList");
   const addInterestButton = document.getElementById("addInterest");
+  const toggleSettingsButton = document.getElementById("toggleSettingsBtn");
+  const interestSettingsDiv = document.getElementById("interestSettings");
+  
+  const facts = [
+    "Fact 1",
+    "Fact 2",
+    "Fact 3"
+  ];
+
+  let currentFactIndex = 0;
+
+  function showFact(index) {
+    document.getElementById("dailyFactText").innerText = facts[index];
+  }
+
+  document.getElementById("moreFactBtn").addEventListener("click", function() {
+    currentFactIndex = (currentFactIndex + 1) % facts.length;
+    showFact(currentFactIndex);
+  });
+
+  document.getElementById("knewThatBtn").addEventListener("click", function() {
+    alert("Okay");
+  });
+
+  toggleSettingsButton.addEventListener("click", function() {
+    if (interestSettingsDiv.style.display === "none") {
+      interestSettingsDiv.style.display = "block";
+      toggleSettingsButton.innerText = "Hide Interest Settings";
+    } else {
+      interestSettingsDiv.style.display = "none";
+      toggleSettingsButton.innerText = "Show Interest Settings";
+    }
+  });
 
   function createInterestItem(interest = '', level = '1') {
     const interestItem = document.createElement('div');
@@ -60,4 +93,6 @@ document.addEventListener('DOMContentLoaded', function() {
       alert('Your study interests and levels have been saved!');
     });
   });
+
+  showFact(currentFactIndex);
 });
