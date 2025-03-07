@@ -1,31 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Study Interests</title>
   <style>
-    body { width: 300px; padding: 10px; font-family: Arial, sans-serif; }
-    label { display: block; margin-top: 10px; }
-    select, input, button { width: 100%; padding: 5px; margin-top: 5px; }
-    .interest-item { margin-bottom: 10px; }
-    .remove-button { cursor: pointer; color: red; font-size: 14px; }
-    .fact-box { 
-      border: 1px solid #000; 
-      padding: 15px; 
-      margin-bottom: 15px; 
-      text-align: center; 
-      font-size: 16px; 
-      background-color: #f9f9f9; 
+    body {
+      width: 300px;
+      padding: 10px;
+      font-family: Arial, sans-serif;
     }
-    .fact-buttons { display: flex; justify-content: space-between; }
-    #interestSettings { display: none; }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    select,
+    input,
+    button {
+      width: 100%;
+      padding: 5px;
+      margin-top: 5px;
+    }
+
+    .interest-item {
+      margin-bottom: 10px;
+    }
+
+    .remove-button {
+      cursor: pointer;
+      color: red;
+      font-size: 14px;
+    }
+
+    .fact-box {
+      border: 1px solid #000;
+      padding: 15px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 16px;
+      background-color: #f9f9f9;
+    }
+
+    .fact-category {
+      position: relative;
+      top: 5px;
+      right: 5px;
+      text-align: right;
+      background-color: #ddd;
+      padding: 2px 5px;
+      font-size: 12px;
+      border-radius: 4px;
+    }
+
+    .settings-icon {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .fact-buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    #interestSettings {
+      display: none;
+    }
   </style>
 </head>
+
 <body>
-  <h3>Today's fact</h3>
-  
+  <div style="display: flex; justify-content: space-between; align-items: center;" id="dailyFactHeader">
+    <h3>Today's Fact</h3>
+    <span class="settings-icon" id="settingsIcon">⚙️</span>
+  </div>
+
   <div class="fact-box" id="dailyFactBox">
+    <span class="fact-category" id="factCategory">Science</span>
     <p id="dailyFactText">x</p>
     <div class="fact-buttons">
       <button id="moreFactBtn">More</button>
@@ -33,7 +89,7 @@
     </div>
   </div>
 
-  <button id="toggleSettingsBtn">Show Interest Settings</button>
+  <button id="toggleSettingsBtn" style="display: none;">Show Interest Settings</button>
 
   <div id="interestSettings">
     <form id="interestForm">
@@ -47,4 +103,5 @@
 
   <script src="popup.js"></script>
 </body>
+
 </html>

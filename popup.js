@@ -1,9 +1,10 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const interestList = document.getElementById("interestList");
   const addInterestButton = document.getElementById("addInterest");
   const toggleSettingsButton = document.getElementById("toggleSettingsBtn");
   const interestSettingsDiv = document.getElementById("interestSettings");
-  
+  const settingsIcon = document.getElementById("settingsIcon");
+
   const facts = [
     "Fact 1",
     "Fact 2",
@@ -16,16 +17,16 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("dailyFactText").innerText = facts[index];
   }
 
-  document.getElementById("moreFactBtn").addEventListener("click", function() {
+  document.getElementById("moreFactBtn").addEventListener("click", function () {
     currentFactIndex = (currentFactIndex + 1) % facts.length;
     showFact(currentFactIndex);
   });
 
-  document.getElementById("knewThatBtn").addEventListener("click", function() {
+  document.getElementById("knewThatBtn").addEventListener("click", function () {
     alert("Okay");
   });
 
-  toggleSettingsButton.addEventListener("click", function() {
+  toggleSettingsButton.addEventListener("click", function () {
     if (interestSettingsDiv.style.display === "none") {
       interestSettingsDiv.style.display = "block";
       toggleSettingsButton.innerText = "Hide Interest Settings";
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function createInterestItem(interest = '', level = '1') {
     const interestItem = document.createElement('div');
     interestItem.className = 'interest-item';
-    
+
     const interestInput = document.createElement('input');
     interestInput.type = 'text';
     interestInput.placeholder = 'Enter interest';
@@ -56,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const removeButton = document.createElement('span');
     removeButton.className = 'remove-button';
     removeButton.textContent = 'Remove';
-    removeButton.onclick = function() {
+    removeButton.onclick = function () {
       interestItem.remove();
     };
 
@@ -67,17 +68,17 @@ document.addEventListener('DOMContentLoaded', function() {
     interestList.appendChild(interestItem);
   }
 
-  addInterestButton.addEventListener('click', function() {
+  addInterestButton.addEventListener('click', function () {
     createInterestItem();
   });
 
-  chrome.storage.sync.get('interests', function(data) {
+  chrome.storage.sync.get('interests', function (data) {
     if (data.interests) {
       data.interests.forEach(item => createInterestItem(item.interest, item.level));
     }
   });
 
-  document.getElementById("interestForm").addEventListener("submit", function(event) {
+  document.getElementById("interestForm").addEventListener("submit", function (event) {
     event.preventDefault();
 
     const interests = [];
@@ -89,9 +90,20 @@ document.addEventListener('DOMContentLoaded', function() {
       interests.push({ interest, level });
     });
 
-    chrome.storage.sync.set({ interests }, function() {
+    chrome.storage.sync.set({ interests }, function () {
       alert('Your study interests and levels have been saved!');
+      dailyFactBox.style.display = "block";
+      dailyFactHeader.style.display = "block";
+
+      interestSettingsDiv.style.display = "none";
     });
+  });
+
+  settingsIcon.addEventListener("click", function () {
+    dailyFactBox.style.display = "none";
+    dailyFactHeader.style.display = "none";
+    toggleSettingsButton.style.display = "block";
+    interestSettingsDiv.style.display = "none"
   });
 
   showFact(currentFactIndex);
