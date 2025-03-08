@@ -2,6 +2,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const interestList = document.getElementById("interestList");
   const addInterestButton = document.getElementById("addInterest");
   const toggleSettingsButton = document.getElementById("toggleSettingsBtn");
+  const toggleHistoryBtn = document.getElementById("toggleHistoryBtn");
+  const togglePlannedBtn = document.getElementById("togglePlannedBtn");
+  const toggleNotificationsBtn = document.getElementById("toggleNotificationsBtn");
+  const toggleArticlesBtn = document.getElementById("toggleArticlesBtn");
+  const articlesArrow = document.getElementById("articlesArrow");
+
   const interestSettingsDiv = document.getElementById("interestSettings");
   const settingsIcon = document.getElementById("settingsIcon");
 
@@ -29,11 +35,20 @@ document.addEventListener('DOMContentLoaded', function () {
   toggleSettingsButton.addEventListener("click", function () {
     if (interestSettingsDiv.style.display === "none") {
       interestSettingsDiv.style.display = "block";
+      toggleNotificationsBtn.style.display = "none";
+      toggleHistoryBtn.style.display = "none";
+      toggleArticlesBtn.style.display = "none";
+      togglePlannedBtn.style.display = "none";
       toggleSettingsButton.innerText = "Hide Interest Settings";
     } else {
       interestSettingsDiv.style.display = "none";
+      toggleNotificationsBtn.style.display = "block";
+      toggleHistoryBtn.style.display = "block";
+      toggleArticlesBtn.style.display = "block";
+      togglePlannedBtn.style.display = "block";
       toggleSettingsButton.innerText = "Show Interest Settings";
     }
+
   });
 
   function createInterestItem(interest = '', level = '1') {
@@ -72,6 +87,14 @@ document.addEventListener('DOMContentLoaded', function () {
     createInterestItem();
   });
 
+  articlesArrow.addEventListener('click', function () {
+    setConfigDisplayStyle("none");
+    dailyFactBox.style.display = "block";
+    dailyFactHeader.style.display = "block";
+
+    interestSettingsDiv.style.display = "none";
+  });
+
   chrome.storage.sync.get('interests', function (data) {
     if (data.interests) {
       data.interests.forEach(item => createInterestItem(item.interest, item.level));
@@ -96,15 +119,29 @@ document.addEventListener('DOMContentLoaded', function () {
       dailyFactHeader.style.display = "block";
 
       interestSettingsDiv.style.display = "none";
+
+      toggleSettingsButton.innerText = "Show Interest Settings";
+      setConfigDisplayStyle("none");
     });
   });
 
   settingsIcon.addEventListener("click", function () {
     dailyFactBox.style.display = "none";
     dailyFactHeader.style.display = "none";
-    toggleSettingsButton.style.display = "block";
     interestSettingsDiv.style.display = "none"
+
+    setConfigDisplayStyle("block");
   });
+
+  function setConfigDisplayStyle(displayStyle) {
+    toggleSettingsButton.style.display = displayStyle;
+    toggleArticlesBtn.style.display = displayStyle;
+    toggleHistoryBtn.style.display = displayStyle;
+    togglePlannedBtn.style.display = displayStyle;
+    toggleNotificationsBtn.style.display = displayStyle;
+    articlesArrow.style.display = displayStyle;
+  }
+
 
   showFact(currentFactIndex);
 });
