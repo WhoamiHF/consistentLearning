@@ -142,6 +142,83 @@ document.addEventListener('DOMContentLoaded', function () {
     articlesArrow.style.display = displayStyle;
   }
 
+  toggleArticlesBtn.addEventListener("click", function () {
+    chrome.storage.sync.get("articles", function (data) {
+      let savedArticles = data.articles || [];
+  
+      let articlesContainer = document.getElementById("savedArticlesContainer");
+      if (!articlesContainer) {
+        articlesContainer = document.createElement("div");
+        articlesContainer.id = "savedArticlesContainer";
+        toggleArticlesBtn.after(articlesContainer);
+      }
+  
+      articlesContainer.innerHTML = "";
+  
+      if (savedArticles.length === 0) {
+        articlesContainer.innerHTML = "<p>No saved articles.</p>";
+      } else {
+        let table = document.createElement("table");
+        table.style.width = "100%";
+        table.style.borderCollapse = "collapse";
+  
+        let headerRow = table.insertRow();
+        ["#", "Article", "Remove"].forEach(text => {
+          let th = document.createElement("th");
+          th.textContent = text;
+          th.style.border = "1px solid black";
+          th.style.padding = "5px";
+          headerRow.appendChild(th);
+        });
+  
+        savedArticles.forEach((url, index) => {
+          let row = table.insertRow();
+          
+          let indexCell = row.insertCell(0);
+          indexCell.textContent = index + 1;
+          indexCell.style.border = "1px solid black";
+          indexCell.style.padding = "5px";
+          indexCell.style.textAlign = "center";
+  
+          let linkCell = row.insertCell(1);
+          let link = document.createElement("a");
+          link.href = url;
+          link.textContent = url;
+          link.target = "_blank";
+          linkCell.appendChild(link);
+          linkCell.style.border = "1px solid black";
+          linkCell.style.padding = "5px";
+  
+          let removeCell = row.insertCell(2);
+          let removeButton = document.createElement("button");
+          removeButton.textContent = "X";
+          removeButton.style.background = "white";
+          removeButton.style.color = "red";
+          removeButton.style.border = "none";
+          removeButton.style.cursor = "pointer";
+          removeButton.onclick = function () {
+            savedArticles.splice(index, 1);
+            chrome.storage.sync.set({ articles: savedArticles }, function () {
+              row.remove();
+              if (savedArticles.length === 0) {
+                articlesContainer.innerHTML = "<p>No saved articles.</p>";
+              }
+            });
+          };
+          removeCell.appendChild(removeButton);
+          removeCell.style.border = "1px solid black";
+          removeCell.style.padding = "5px";
+          removeCell.style.textAlign = "center";
+        });
+  
+        articlesContainer.appendChild(table);
+      }
+  
+      articlesContainer.style.display = "block";
+    });
+  });
+  
+
 
   showFact(currentFactIndex);
 });
